@@ -1,0 +1,185 @@
+html {
+    width: 400px;
+    background-color: #2D2A32;
+}
+
+body {
+    width: 100%;
+    height: 100%;
+}
+
+.logo {
+    margin-top: 20px;
+}
+
+.fullMargin {
+    margin-top: 10px;
+    margin-bottom: 40px;
+}
+
+.userInput{
+    width: 70%;
+}
+
+.uk-input {
+    background: none;
+    border: 1px solid #BFACAA;
+    font-size: 20px;
+    color: #E1E2EF;
+    border-radius: 5px;
+}
+
+.uk-button {
+    width: 81.5%;
+    border: 1px solid #4B88A2;
+    background: none;
+    border-radius: 5px;
+}
+
+#sTo{
+text-align: right;
+position: relative;
+width: 100%;
+    padding-left: 10px;
+}
+
+#sTo:focus{
+    background: none;
+}
+
+#sTo:hover{
+    background: none;
+}
+
+
+
+#sFrom{
+    text-align: right;
+    position: relative;
+    width: 100%;
+    padding-left: 10px;
+    }
+
+    #sFrom:focus{
+        background: none;
+    }
+    
+    #sFrom:hover{
+        background: none;
+    }
+
+.label{
+    font-size: 20px;
+    position: relative;
+    color: #BFACAA;
+    right: -28px;
+    top: 5px;
+    z-index: 2;
+}
+
+.labelFrom{
+    font-size: 20px;
+    position: relative;
+    color: #BFACAA;
+    right: -40px;
+    top: 5px;
+    z-index: 2;
+}
+
+
+#highlighter {
+    border-radius: 5px;
+    display: block;
+    padding: 0px;
+    margin: 0;
+    width: 48px;
+    border: 1px solid #4B88A2;
+    border-radius: 5px;
+}
+
+#highlighter:hover {
+    background-color: #4B88A2;
+}
+
+#copy {
+    border-radius: 5px;
+    display: block;
+    padding: 0px;
+    margin: 0;
+    width: 48px;
+    border: 1px solid #4B88A2;
+    border-radius: 5px;
+}
+
+#copy:hover {
+    background-color: #4B88A2;
+}
+
+.dropdown {
+    background-color: #BFACAA;
+    color: #2D2A32;
+    font-size: 15px;
+}
+
+.uk-button:hover {
+    background-color: #4B88A2;
+}
+
+.inSelFrom{
+    width: 83%;
+    left: -30px;
+}
+
+.inSelTo{
+    width: 83%;
+    left: -18px;
+}
+
+#clearTo{
+    z-index: 2;
+}
+
+#clearFrom{
+    z-index: 2;
+}
+
+.uk-input:focus{
+    background-color: #2D2A32;
+    color: #E1E2EF;
+    border: 1px solid #BFACAA;
+}
+
+#errorAlert {
+    background-color: darkred;
+    color: #E1E2EF;
+    display: none;
+}
+
+datalist {
+    position: absolute;
+    max-height: 11em;
+    margin-left: 2.75em;
+    border: 0 none;
+    overflow-y: auto;
+    border: 1px solid #BFACAA;
+    border-radius: 0 0 5px 5px;
+    width: 83%;
+    z-index: 3;
+}
+
+option {
+    font-size: 1.25em;
+    padding: 0.3em 1em;
+    background-color: #2D2A32;
+    color: #E1E2EF;
+    cursor: pointer;
+    z-index: 3;
+  }
+  
+  /* option active styles */
+ option:hover, .active {
+    color: #E1E2EF;
+    background-color: #4B88A2;
+    outline: 0 none;
+  }
+  

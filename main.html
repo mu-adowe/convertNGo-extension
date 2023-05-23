@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/uikit.min.css">
+    <script src="./js/uikit.min.js"></script>
+    <script src="./js/uikit-icons.min.js"></script>
+
+    <link rel="stylesheet" href="./css/style.css">
+
+    <title>ConvertNGo</title>
+</head>
+
+<body>
+    <script src="js/math.js"></script>
+    <script src="js/units.js"></script>
+    <div class="uk-text-center ">
+        <div id="errorAlert" uk-alert>
+            <p>Error: Make sure input and measurements are not empty.</p>
+        </div>
+        <div class="logo"><img src="img/iconNew.png" width="240" height="240"></div>
+        <div class="fullMargin">
+            <div class="uk-margin">
+
+                <div class="uk-inline userInput">
+                    <a class="uk-form-icon uk-form-icon-flip" id="clear" href="#" uk-icon="icon: close"></a>
+                    <input class="uk-input" id="inputText" />
+                </div>
+                <div class="uk-inline">
+                    <button class="uk-button uk-button-primary" id="highlighter"><img src="img/target.svg" width="20"
+                            height="20" uk-svg></button>
+                    <div class="dropdown" uk-dropdown> Highlight any text (and messurement type if applicable) on
+                        the webpage and press this button.</div>
+                </div>
+            </div>
+            <div class="uk-margin">
+                <span class="labelFrom">From : </span>
+                <div class="uk-inline inSelFrom">
+                    <a class="uk-form-icon uk-form-icon-flip" id="clearFrom" uk-icon="icon: close"></a>
+                    
+                    <input id="sFrom" class="uk-input" list=""  role="combobox" autocomplete="off">
+                </div>
+                <datalist id="select-from" class="select-from" role="listbox">
+                </datalist>
+            </div>
+            <div class="uk-margin">
+                <span class="label">To : </span>
+                <div class="uk-inline inSelTo">
+                    <a class="uk-form-icon uk-form-icon-flip" id="clearTo" uk-icon="icon: close"></a>
+                    <input id="sTo" class="uk-input" list="" role="combobox" autocomplete="off">
+                </div>
+                <datalist id="select-to" class="select-to" role="listbox">
+                </datalist>
+            </div>
+            <div class="uk-margin">
+
+                <div class=" uk-grid" uk-grid>
+                    <div class="uk-width-1-2">
+
+                        <button id="convert" class="uk-button uk-button-primary uk-align-right">convert</button>
+                    </div>
+                    <div class="uk-width-1-2">
+
+                        <button id="swap" class="uk-button uk-button-primary uk-align-left">swap</button>
+                    </div>
+                </div>
+            </div>
+            <div class="uk-margin">
+
+                <input class="uk-input userInput" type="text" id="result" />
+                <div class="uk-inline">
+                    <button class="uk-button uk-button-primary" id="copy"><img src="img/copy.svg" width="20" height="20"
+                            uk-svg></button>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <script src="popup.js"></script>
+
+</body>
+
+</html>

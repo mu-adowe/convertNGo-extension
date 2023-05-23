@@ -1,0 +1,32 @@
+{
+    "name": "convertNGo",
+    "description": "Convert all basic units manually or with the new units selector.",
+    "version": "1.0",
+    "manifest_version": 3,
+    "background": {
+        "service_worker": "main.js"
+      },
+      "action": {
+        "default_popup": "main.html"
+      },
+      "content_scripts": [
+        {
+          "matches": ["<all_urls>"],
+          "js": ["script.js", "js/units.js", "js/math.js"]
+        }
+      ],
+      
+      "permissions": [
+          "storage","activeTab", "tabs", "scripting","contextMenus"
+      ],
+      "host_permissions": [
+        "<all_urls>"
+      ],
+      "icons": {
+        "16": "img/icon.png",
+        "32": "img/icon.png",
+        "48": "img/icon.png",
+        "128": "img/icon.png"
+      }
+      
+  }
