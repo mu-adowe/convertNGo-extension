@@ -825,9 +825,9 @@ const units = [
 
         "kibibits": (val) => parseFloat(val) * 976563,
 
-        "megabits": (val) => parseFloat(val) * 1000,
+        "megabits": (val) => parseFloat(val) * 8000,
 
-        "megabytes": (val) => parseFloat(val) * 125,
+        "megabytes": (val) => parseFloat(val) * 1000,
 
         "mebibits": (val) => parseFloat(val) * 954,
 
@@ -854,9 +854,9 @@ const units = [
 
         "kibibits": (val) => parseFloat(val) * 1049000,
 
-        "megabits": (val) => parseFloat(val) * 1074,
+        "megabits": (val) => parseFloat(val) * 8589.93,
 
-        "megabytes": (val) => parseFloat(val) * 134,
+        "megabytes": (val) => parseFloat(val) * 1073.74,
 
         "mebibits": (val) => parseFloat(val) * 1024,
 

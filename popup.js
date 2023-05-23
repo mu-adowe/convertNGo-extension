@@ -119,7 +119,7 @@ highlighter.addEventListener("click", async () => {
       // console.log(autoMeasurementFinderString)
       //regex for number that dont start with . /(\d{1,3},\d{3}(,\d{3})*)(\.\d*)?|\d+\.?\d*/
       
-      if (selectInput[0] == "") {
+      if (selectInput == "") {
         selectInput = rData.match(/^[\d\W]/);
         console.log(selectInput[0])
         if(fractions[selectInput[0]]){
@@ -142,7 +142,7 @@ highlighter.addEventListener("click", async () => {
       else{
         let test = rData.replace(selectInput[0], "").trim()
         const otherInput = test.match(/^[\d\W]/);
-        if(fractions[otherInput[0]]){
+        if(fractions[otherInput]){
           inputSel.value = (parseFloat(selectInput[0]) + parseFloat(fractions[otherInput[0]])).toString()
           measurementHandle(rData,selectInput[0].concat(" ", otherInput[0]),inputSel.value);
         }
