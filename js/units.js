@@ -1489,7 +1489,7 @@ const units = [
     }, {
         unit: "US tablespoon",
         type: "Volume",
-        abbrev: ["US tablespoon", "us tablespoon", "tbsp"],
+        abbrev: ["US tablespoon", "us tablespoon", "tbsp", "tablespoon", "Tablespoon", "tablespoons", "Tablespoons"],
         validator: /^[0-9.]+$/,
         "US liquid gallon": (val) => parseFloat(val) / 256,
 
