@@ -116,12 +116,12 @@ highlighter.addEventListener("click", async () => {
       let selectInput = rData.match(
         /(\d{1,3},\d{3}(,\d{3})*)(\.\d*)?|\d*\.?\d*/
       ); 
-      // console.log(autoMeasurementFinderString)
+      // console.log(selectInput)
       //regex for number that dont start with . /(\d{1,3},\d{3}(,\d{3})*)(\.\d*)?|\d+\.?\d*/
       
-      if (selectInput == "") {
+      if (selectInput[0] == "") {
         selectInput = rData.match(/^[\d\W]/);
-        console.log(selectInput[0])
+        // console.log(selectInput[0])
         if(fractions[selectInput[0]]){
           inputSel.value = fractions[selectInput[0]]
           measurementHandle(rData,selectInput[0],fractions[selectInput[0]]);
