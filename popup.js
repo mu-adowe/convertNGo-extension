@@ -14,7 +14,16 @@ const clear = document.getElementById("clear");
 const clearFrom = document.getElementById("clearFrom");
 const clearTo = document.getElementById("clearTo");
 
-const fractions = {"½": "0.5","¾": "0.75", "¼": "0.25", "⅓": "0.33", "⅔": "0.67", "⅛": "0.125", "⅜": "0.375", "⅝": "0.625" };
+const fractions = {
+  "½": "0.5",
+  "¾": "0.75",
+  "¼": "0.25",
+  "⅓": "0.33",
+  "⅔": "0.67",
+  "⅛": "0.125",
+  "⅜": "0.375",
+  "⅝": "0.625",
+};
 let currentFocus = [];
 let currentFocusTo = [];
 
@@ -25,21 +34,21 @@ clearFrom.addEventListener("click", () => {
   sTo.value = "";
   selectTo.innerHTML = "";
 
-  for (let i =0; i < selectFrom.options.length; i++){
+  for (let i = 0; i < selectFrom.options.length; i++) {
     selectFrom.options[i].style.display = "block";
     currentFocus.push(i);
   }
-removeActive(selectFrom.options)
+  removeActive(selectFrom.options);
 });
 
 clearTo.addEventListener("click", () => {
   sTo.value = "";
-  
-  for (let i =0; i < selectTo.options.length; i++){
+
+  for (let i = 0; i < selectTo.options.length; i++) {
     selectTo.options[i].style.display = "block";
     currentFocusTo.push(i);
   }
-  removeActiveTo(selectTo.options)
+  removeActiveTo(selectTo.options);
 });
 
 clear.addEventListener("click", () => {
@@ -102,7 +111,7 @@ function selectToFilter(val) {
     };
   }
   sTo.value = selectTo.options[0].value;
-  selectTo.options[0].classList.add("active")
+  selectTo.options[0].classList.add("active");
 }
 
 // takes highlighted text from webpage and inserts it in the input field and select from field
@@ -115,64 +124,66 @@ highlighter.addEventListener("click", async () => {
       let rData = response.data.trim();
       let selectInput = rData.match(
         /(\d{1,3},\d{3}(,\d{3})*)(\.\d*)?|\d*\.?\d*/
-      ); 
-      // console.log(selectInput)
+      );
       //regex for number that dont start with . /(\d{1,3},\d{3}(,\d{3})*)(\.\d*)?|\d+\.?\d*/
-      
-      if (selectInput[0] == "") {
+
+      if (!selectInput) {
+        measurementHandle(rData, selectInput, selectInput);
+      } else if (selectInput[0] == "") {
         selectInput = rData.match(/^[\d\W]/);
         // console.log(selectInput[0])
-        if(fractions[selectInput[0]]){
-          inputSel.value = fractions[selectInput[0]]
-          measurementHandle(rData,selectInput[0],fractions[selectInput[0]]);
-        }
-        else if(!selectInput){
-          measurementHandle(rData,selectInput,selectInput);
-        }
-        else{
+
+        if (!selectInput) {
+          measurementHandle(rData, selectInput, selectInput);
+        } else if (fractions[selectInput[0]]) {
+          inputSel.value = fractions[selectInput[0]];
+          measurementHandle(rData, selectInput[0], fractions[selectInput[0]]);
+        } else {
           // console.log(selectInput)
           inputSel.value = math.evaluate(selectInput[0]);
-          measurementHandle(rData,inputSel.value, inputSel.value);
+          measurementHandle(rData, inputSel.value, inputSel.value);
           // inputSel.value = rData.trim();
           // sFrom.value = units[0].unit;
           // selectToFilter(units[0].unit);
-
         }
-      }
-      else{
-        let test = rData.replace(selectInput[0], "").trim()
+      } else {
+        let test = rData.replace(selectInput[0], "").trim();
         const otherInput = test.match(/^[\d\W]/);
-        if(fractions[otherInput]){
-          inputSel.value = (parseFloat(selectInput[0]) + parseFloat(fractions[otherInput[0]])).toString()
-          measurementHandle(rData,selectInput[0].concat(" ", otherInput[0]),inputSel.value);
-        }
-        else
-        measurementHandle(rData,selectInput[0],selectInput[0]);
+        if (fractions[otherInput]) {
+          inputSel.value = (
+            parseFloat(selectInput[0]) + parseFloat(fractions[otherInput[0]])
+          ).toString();
+          measurementHandle(
+            rData,
+            selectInput[0].concat(" ", otherInput[0]),
+            inputSel.value
+          );
+        } else measurementHandle(rData, selectInput[0], selectInput[0]);
       }
     }
   );
 });
 
-function measurementHandle(rData,selectInput,inpVal){
+function measurementHandle(rData, selectInput, inpVal) {
   let autoMeasurementFinderString = rData.replace(selectInput, "");
-        autoMeasurementFinderString = autoMeasurementFinderString.trim();
-        const autoMeasurementFinderIndex = units.findIndex((r) =>
-          r.abbrev.includes(autoMeasurementFinderString)
-        );
-        if (
-          autoMeasurementFinderIndex > -1 &&
-          selectInput !== null &&
-          units[autoMeasurementFinderIndex].type !== "ASCII"
-        ) {
-          sFrom.value = units[autoMeasurementFinderIndex].unit;
-          const removeComma = inpVal.replace(/,/g, "");
-          inputSel.value = removeComma.trim();
-          selectToFilter(sFrom.value);
-        } else {
-          inputSel.value = rData.trim();
-          sFrom.value = units[0].unit;
-          selectToFilter(units[0].unit);
-        }
+  autoMeasurementFinderString = autoMeasurementFinderString.trim();
+  const autoMeasurementFinderIndex = units.findIndex((r) =>
+    r.abbrev.includes(autoMeasurementFinderString)
+  );
+  if (
+    autoMeasurementFinderIndex > -1 &&
+    selectInput !== null &&
+    units[autoMeasurementFinderIndex].type !== "ASCII"
+  ) {
+    sFrom.value = units[autoMeasurementFinderIndex].unit;
+    const removeComma = inpVal.replace(/,/g, "");
+    inputSel.value = removeComma.trim();
+    selectToFilter(sFrom.value);
+  } else {
+    inputSel.value = rData.trim();
+    sFrom.value = units[0].unit;
+    selectToFilter(units[0].unit);
+  }
 }
 
 // converts the input field and outputs it based on select from and select to field
@@ -211,10 +222,10 @@ convert.addEventListener("click", () => {
   getStorage(fromConv, toConv);
 
   let index = units.findIndex((x) => x.unit === fromConv);
-    if(index > 4){
-      inputChecker = math.evaluate(inputChecker)
-      inputSel.value = inputChecker;
-    }
+  if (index > 4) {
+    inputChecker = math.evaluate(inputChecker);
+    inputSel.value = inputChecker;
+  }
 
   if (!units[index].validator.test(inputChecker)) {
     document.querySelector(
@@ -299,10 +310,10 @@ sFrom.oninput = function () {
   fromIndex = -1;
   currentFocus = [];
   var text = sFrom.value.toUpperCase();
-  for (let i =0; i < selectFrom.options.length; i++) {
+  for (let i = 0; i < selectFrom.options.length; i++) {
     if (selectFrom.options[i].value.toUpperCase().indexOf(text) > -1) {
       selectFrom.options[i].style.display = "block";
-        currentFocus.push(i)
+      currentFocus.push(i);
     } else {
       selectFrom.options[i].style.display = "none";
     }
@@ -313,23 +324,21 @@ sFrom.onkeydown = function (e) {
   if (e.keyCode == 40) {
     fromIndex++;
     addActive(selectFrom.options);
-    if(fromIndex > 0)
-    selectFrom.scrollTop = selectFrom.scrollTop + 32;
-    if(fromIndex == 0)
-    selectFrom.scrollTop = 0;
+    if (fromIndex > 0) selectFrom.scrollTop = selectFrom.scrollTop + 32;
+    if (fromIndex == 0) selectFrom.scrollTop = 0;
   } else if (e.keyCode == 38) {
     fromIndex--;
     addActive(selectFrom.options);
     selectFrom.scrollTop = selectFrom.scrollTop - 32;
-    if(fromIndex == 0)
-    selectFrom.scrollTop = 0;
-    if(fromIndex == currentFocus.length-1)
-    selectFrom.scrollTo(0,selectFrom.scrollHeight);
+    if (fromIndex == 0) selectFrom.scrollTop = 0;
+    if (fromIndex == currentFocus.length - 1)
+      selectFrom.scrollTo(0, selectFrom.scrollHeight);
   } else if (e.keyCode == 13) {
     e.preventDefault();
     if (fromIndex > -1) {
       /*and simulate a click on the "active" item:*/
-      if (selectFrom.options) selectFrom.options[currentFocus[fromIndex]].click();
+      if (selectFrom.options)
+        selectFrom.options[currentFocus[fromIndex]].click();
     }
   }
 };
@@ -359,10 +368,10 @@ sTo.oninput = function () {
   currentFocusTo = [];
   toIndex = -1;
   var text = sTo.value.toUpperCase();
-  for (let i =0; i < selectTo.options.length; i++) {
-     if (selectTo.options[i].value.toUpperCase().indexOf(text) > -1) {
+  for (let i = 0; i < selectTo.options.length; i++) {
+    if (selectTo.options[i].value.toUpperCase().indexOf(text) > -1) {
       selectTo.options[i].style.display = "block";
-        currentFocusTo.push(i)
+      currentFocusTo.push(i);
     } else {
       selectTo.options[i].style.display = "none";
     }
@@ -373,18 +382,15 @@ sTo.onkeydown = function (e) {
   if (e.keyCode == 40) {
     toIndex++;
     addActiveTo(selectTo.options);
-    if(toIndex > 0)
-    selectTo.scrollTop = selectTo.scrollTop + 32;
-    if(toIndex == 0)
-    selectTo.scrollTop = 0;
+    if (toIndex > 0) selectTo.scrollTop = selectTo.scrollTop + 32;
+    if (toIndex == 0) selectTo.scrollTop = 0;
   } else if (e.keyCode == 38) {
     toIndex--;
     addActiveTo(selectTo.options);
     selectTo.scrollTop = selectTo.scrollTop - 32;
-    if(toIndex == 0)
-    selectTo.scrollTop = 0;
-    if(toIndex == currentFocusTo.length-1)
-    selectTo.scrollTo(0,selectTo.scrollHeight);
+    if (toIndex == 0) selectTo.scrollTop = 0;
+    if (toIndex == currentFocusTo.length - 1)
+      selectTo.scrollTo(0, selectTo.scrollHeight);
   } else if (e.keyCode == 13) {
     e.preventDefault();
     if (toIndex > -1) {
