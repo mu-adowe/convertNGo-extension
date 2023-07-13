@@ -168,8 +168,8 @@ datalist {
 }
 
 option {
-    font-size: 1.25em;
-    padding: 0.3em 1em;
+    font-size: 20px;
+    padding: 1px 1px;
     background-color: #2D2A32;
     color: #E1E2EF;
     cursor: pointer;
