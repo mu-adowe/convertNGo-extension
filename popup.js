@@ -377,7 +377,6 @@ sTo.onkeydown = function (e) {
     selectTo.scrollTop = selectTo.scrollTop + selectTo.options[0].clientHeight;
     if(toIndex == 0)
     selectTo.scrollTop = 0;
-    
   } else if (e.keyCode == 38) {
     toIndex--;
     addActiveTo(selectTo.options);
