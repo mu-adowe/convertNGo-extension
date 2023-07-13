@@ -314,13 +314,13 @@ sFrom.onkeydown = function (e) {
     fromIndex++;
     addActive(selectFrom.options);
     if(fromIndex > 0)
-    selectFrom.scrollTop = selectFrom.scrollTop + selectFrom.options[0].clientHeight;
+    selectFrom.scrollTop = selectFrom.scrollTop + 32;
     if(fromIndex == 0)
     selectFrom.scrollTop = 0;
   } else if (e.keyCode == 38) {
     fromIndex--;
     addActive(selectFrom.options);
-    selectFrom.scrollTop = selectFrom.scrollTop - selectFrom.options[0].clientHeight;
+    selectFrom.scrollTop = selectFrom.scrollTop - 32;
     if(fromIndex == 0)
     selectFrom.scrollTop = 0;
     if(fromIndex == currentFocus.length-1)
@@ -374,19 +374,19 @@ sTo.onkeydown = function (e) {
     toIndex++;
     addActiveTo(selectTo.options);
     if(toIndex > 0)
-    selectTo.scrollTop = selectTo.scrollTop + selectTo.options[0].clientHeight;
+    selectTo.scrollTop = selectTo.scrollTop + 32;
     if(toIndex == 0)
     selectTo.scrollTop = 0;
   } else if (e.keyCode == 38) {
     toIndex--;
     addActiveTo(selectTo.options);
-    selectTo.scrollTop = selectTo.scrollTop - selectTo.options[0].clientHeight;
+    selectTo.scrollTop = selectTo.scrollTop - 32;
     if(toIndex == 0)
     selectTo.scrollTop = 0;
     if(toIndex == currentFocusTo.length-1)
     selectTo.scrollTo(0,selectTo.scrollHeight);
   } else if (e.keyCode == 13) {
-    // e.preventDefault();
+    e.preventDefault();
     if (toIndex > -1) {
       /*and simulate a click on the "active" item:*/
       if (selectTo.options) selectTo.options[currentFocusTo[toIndex]].click();
