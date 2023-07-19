@@ -258,17 +258,17 @@ function getStorage(from, to) {
     const keyI = result.keyId;
 
     if (keyI == []) {
-      keyI.push({ mainKey: from, toKey: to, count: 1 });
+      keyI.push({ mainKey: from, toKey: to, conversions: 1 });
     } else {
       const adder = keyI.findIndex((i) => i.mainKey == from && i.toKey == to);
 
-      if (adder > -1) keyI[adder].count += 1;
-      else keyI.push({ mainKey: from, toKey: to, count: 1 });
+      if (adder > -1) keyI[adder].conversions += 1;
+      else keyI.push({ mainKey: from, toKey: to, conversions: 1 });
     }
 
     chrome.storage.local.set({ keyId: keyI }, function () {
       chrome.storage.local.get("keyId", function (result) {
-        //console.log(result.keyId);
+        console.log(result.keyId);
       });
     });
   });
