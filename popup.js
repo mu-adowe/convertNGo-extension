@@ -304,6 +304,14 @@ for (let option of selectFrom.options) {
   };
 }
 
+sFrom.addEventListener("focusout", function () {
+  selectFrom.style.display = "none";
+})
+
+sTo.addEventListener("focusout", function () {
+  selectTo.style.display = "none";
+})
+
 let fromIndex = -1;
 
 sFrom.oninput = function () {
