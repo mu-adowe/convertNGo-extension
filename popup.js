@@ -13,6 +13,7 @@ const errorAlert = document.getElementById("errorAlert");
 const clear = document.getElementById("clear");
 const clearFrom = document.getElementById("clearFrom");
 const clearTo = document.getElementById("clearTo");
+const bodyPage = document.getElementById("mainPage");
 
 const fractions = {
   "½": "0.5",
@@ -28,6 +29,25 @@ let currentFocus = [];
 let currentFocusTo = [];
 
 let selTo, inputChecker, fromConv, toConv, validInput;
+
+for (let i = 0; i < selectTo.options.length; i++) {
+  // selectTo.options[i].style.display = "block";
+  currentFocusTo.push(i);
+}
+
+inputSel.addEventListener("click", () => {
+     selectFrom.style.display="none";
+     selectTo.style.display="none";
+     sFrom.style.borderRadius = "5px";
+  sTo.style.borderRadius = "5px";
+})
+
+resOutput.addEventListener("click", () => {
+  selectFrom.style.display="none";
+  selectTo.style.display="none";
+  sFrom.style.borderRadius = "5px";
+  sTo.style.borderRadius = "5px";
+})
 
 clearFrom.addEventListener("click", () => {
   sFrom.value = "";
@@ -71,7 +91,7 @@ chrome.storage.local.get("keyId", function (result) {
     selectToFilter(sFrom.value);
   } else {
     const fromResult = result.keyId.reduce(function (prev, current) {
-      return prev.count > current.count ? prev : current;
+      return prev.conversions > current.conversions ? prev : current;
     });
 
     sFrom.value = fromResult.mainKey;
@@ -116,6 +136,10 @@ function selectToFilter(val) {
 
 // takes highlighted text from webpage and inserts it in the input field and select from field
 highlighter.addEventListener("click", async () => {
+  selectFrom.style.display="none";
+  selectTo.style.display="none";
+  sFrom.style.borderRadius = "5px";
+  sTo.style.borderRadius = "5px";
   let tab = await chrome.tabs.query({ active: true, currentWindow: true });
   chrome.tabs.sendMessage(
     tab[0].id,
@@ -189,7 +213,8 @@ function measurementHandle(rData, selectInput, inpVal) {
 // converts the input field and outputs it based on select from and select to field
 convert.addEventListener("click", () => {
   errorAlert.style.display = "none";
-
+  selectFrom.style.display="none";
+  selectTo.style.display="none";
   if (inputSel.value == "" || sFrom.value == "" || sTo.value == "") {
     document.querySelector("#errorAlert p").innerHTML =
       "Error: Make sure input and measurements are not empty.";
@@ -248,6 +273,10 @@ convert.addEventListener("click", () => {
 
 // copies result input to clipboard
 copyResult.addEventListener("click", () => {
+  selectFrom.style.display="none";
+  selectTo.style.display="none";
+  sFrom.style.borderRadius = "5px";
+  sTo.style.borderRadius = "5px";
   resOutput.select();
   navigator.clipboard.writeText(resOutput.value);
 });
@@ -292,25 +321,29 @@ swap.addEventListener("click", () => {
 
 // css datalist manipulation for from dropdown
 sFrom.onfocus = function () {
+  selectTo.style.display = "none";
+  sTo.style.borderRadius = "5px";
   selectFrom.style.display = "block";
   sFrom.style.borderRadius = "5px 5px 0 0";
+  for (let i = 0; i < selectFrom.options.length; i++) {
+    selectFrom.options[i].style.display = "block";
+    currentFocus.push(i);
+  }
 };
+
 for (let option of selectFrom.options) {
-  option.onclick = function () {
+  option.addEventListener("click" ,function (k) {
+    if(sFrom.value == option.value){
+      selectFrom.style.display = "none";
+    sFrom.style.borderRadius = "5px";
+    return
+    }
     sFrom.value = option.value;
     selectFrom.style.display = "none";
     sFrom.style.borderRadius = "5px";
     selectToFilter(sFrom.value);
-  };
+  });
 }
-
-sFrom.addEventListener("focusout", function () {
-  selectFrom.style.display = "none";
-})
-
-sTo.addEventListener("focusout", function () {
-  selectTo.style.display = "none";
-})
 
 let fromIndex = -1;
 
@@ -366,6 +399,8 @@ function removeActive(x) {
 }
 
 sTo.onfocus = function () {
+  selectFrom.style.display = "none";
+  sFrom.style.borderRadius = "5px";
   selectTo.style.display = "block";
   sTo.style.borderRadius = "5px 5px 0 0";
 };
