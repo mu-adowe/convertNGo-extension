@@ -148,15 +148,19 @@ highlighter.addEventListener("click", async () => {
       let rData = response.data.trim();
       let selectInput = rData.match(
         /(\d{1,3},\d{3}(,\d{3})*)(\.\d*)?|\d*\.?\d*/
-      );
-      //regex for number that dont start with . /(\d{1,3},\d{3}(,\d{3})*)(\.\d*)?|\d+\.?\d*/
-
+        );
+        //regex for number that dont start with . /(\d{1,3},\d{3}(,\d{3})*)(\.\d*)?|\d+\.?\d*/
+        const equa = rData.match(/[1-9][0-9]*\/[1-9][0-9]*/)
+     if(equa){
+       inputSel.value = math.evaluate(equa[0]);
+       measurementHandle(rData, equa[0], inputSel.value);
+       return
+     }
       if (!selectInput) {
         measurementHandle(rData, selectInput, selectInput);
       } else if (selectInput[0] == "") {
         selectInput = rData.match(/^[\d\W]/);
         // console.log(selectInput[0])
-
         if (!selectInput) {
           measurementHandle(rData, selectInput, selectInput);
         } else if (fractions[selectInput[0]]) {
@@ -176,10 +180,19 @@ highlighter.addEventListener("click", async () => {
         if (fractions[otherInput]) {
           inputSel.value = (
             parseFloat(selectInput[0]) + parseFloat(fractions[otherInput[0]])
+            ).toString();
+            measurementHandle(
+              rData,
+              selectInput[0].concat(" ", otherInput[0]),
+              inputSel.value
+              );
+            } else if(equa){
+          inputSel.value = (
+            parseFloat(selectInput[0]) + parseFloat(math.evaluate(equa[0]))
           ).toString();
           measurementHandle(
             rData,
-            selectInput[0].concat(" ", otherInput[0]),
+            selectInput[0].concat(" ", equa[0]),
             inputSel.value
           );
         } else measurementHandle(rData, selectInput[0], selectInput[0]);
