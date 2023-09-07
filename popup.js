@@ -36,18 +36,18 @@ for (let i = 0; i < selectTo.options.length; i++) {
 }
 
 inputSel.addEventListener("click", () => {
-     selectFrom.style.display="none";
-     selectTo.style.display="none";
-     sFrom.style.borderRadius = "5px";
-  sTo.style.borderRadius = "5px";
-})
-
-resOutput.addEventListener("click", () => {
-  selectFrom.style.display="none";
-  selectTo.style.display="none";
+  selectFrom.style.display = "none";
+  selectTo.style.display = "none";
   sFrom.style.borderRadius = "5px";
   sTo.style.borderRadius = "5px";
-})
+});
+
+resOutput.addEventListener("click", () => {
+  selectFrom.style.display = "none";
+  selectTo.style.display = "none";
+  sFrom.style.borderRadius = "5px";
+  sTo.style.borderRadius = "5px";
+});
 
 clearFrom.addEventListener("click", () => {
   sFrom.value = "";
@@ -136,8 +136,8 @@ function selectToFilter(val) {
 
 // takes highlighted text from webpage and inserts it in the input field and select from field
 highlighter.addEventListener("click", async () => {
-  selectFrom.style.display="none";
-  selectTo.style.display="none";
+  selectFrom.style.display = "none";
+  selectTo.style.display = "none";
   sFrom.style.borderRadius = "5px";
   sTo.style.borderRadius = "5px";
   let tab = await chrome.tabs.query({ active: true, currentWindow: true });
@@ -148,14 +148,9 @@ highlighter.addEventListener("click", async () => {
       let rData = response.data.trim();
       let selectInput = rData.match(
         /(\d{1,3},\d{3}(,\d{3})*)(\.\d*)?|\d*\.?\d*/
-        );
-        //regex for number that dont start with . /(\d{1,3},\d{3}(,\d{3})*)(\.\d*)?|\d+\.?\d*/
-        const equa = rData.match(/[1-9][0-9]*\/[1-9][0-9]*/)
-     if(equa){
-       inputSel.value = math.evaluate(equa[0]);
-       measurementHandle(rData, equa[0], inputSel.value);
-       return
-     }
+      );
+      //regex for number that dont start with . /(\d{1,3},\d{3}(,\d{3})*)(\.\d*)?|\d+\.?\d*/
+      const equa = rData.match(/[1-9][0-9]*\/[1-9][0-9]*/);
       if (!selectInput) {
         measurementHandle(rData, selectInput, selectInput);
       } else if (selectInput[0] == "") {
@@ -180,21 +175,31 @@ highlighter.addEventListener("click", async () => {
         if (fractions[otherInput]) {
           inputSel.value = (
             parseFloat(selectInput[0]) + parseFloat(fractions[otherInput[0]])
-            ).toString();
-            measurementHandle(
-              rData,
-              selectInput[0].concat(" ", otherInput[0]),
-              inputSel.value
-              );
-            } else if(equa){
-          inputSel.value = (
-            parseFloat(selectInput[0]) + parseFloat(math.evaluate(equa[0]))
           ).toString();
           measurementHandle(
             rData,
-            selectInput[0].concat(" ", equa[0]),
+            selectInput[0].concat(" ", otherInput[0]),
             inputSel.value
           );
+        } else if (equa) {
+          test = rData.replace(equa[0], "").trim();
+          if(test.includes(selectInput[0])){
+            inputSel.value = (
+              parseFloat(selectInput[0]) + parseFloat(math.evaluate(equa[0]))
+            ).toString();
+            measurementHandle(
+              rData,
+              selectInput[0].concat(" ", equa[0]),
+              inputSel.value
+            );
+          }else {
+            inputSel.value = math.evaluate(equa[0]).toString();
+            measurementHandle(
+              rData,
+              equa[0],
+              inputSel.value
+            );
+          }
         } else measurementHandle(rData, selectInput[0], selectInput[0]);
       }
     }
@@ -226,8 +231,8 @@ function measurementHandle(rData, selectInput, inpVal) {
 // converts the input field and outputs it based on select from and select to field
 convert.addEventListener("click", () => {
   errorAlert.style.display = "none";
-  selectFrom.style.display="none";
-  selectTo.style.display="none";
+  selectFrom.style.display = "none";
+  selectTo.style.display = "none";
   if (inputSel.value == "" || sFrom.value == "" || sTo.value == "") {
     document.querySelector("#errorAlert p").innerHTML =
       "Error: Make sure input and measurements are not empty.";
@@ -286,8 +291,8 @@ convert.addEventListener("click", () => {
 
 // copies result input to clipboard
 copyResult.addEventListener("click", () => {
-  selectFrom.style.display="none";
-  selectTo.style.display="none";
+  selectFrom.style.display = "none";
+  selectTo.style.display = "none";
   sFrom.style.borderRadius = "5px";
   sTo.style.borderRadius = "5px";
   resOutput.select();
@@ -345,11 +350,11 @@ sFrom.onfocus = function () {
 };
 
 for (let option of selectFrom.options) {
-  option.addEventListener("click" ,function (k) {
-    if(sFrom.value == option.value){
+  option.addEventListener("click", function (k) {
+    if (sFrom.value == option.value) {
       selectFrom.style.display = "none";
-    sFrom.style.borderRadius = "5px";
-    return
+      sFrom.style.borderRadius = "5px";
+      return;
     }
     sFrom.value = option.value;
     selectFrom.style.display = "none";
